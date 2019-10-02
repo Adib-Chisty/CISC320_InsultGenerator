@@ -46,15 +46,6 @@ bool exists(vector<string> vecToTest, string input) {
 	return false;
 }
 
-bool existsInSet(unordered_set<string>setToTest, string s) {
-	const auto is_in = setToTest.find(s) != setToTest.end();
-	return is_in;
-}
-
-bool existsInSet(set<string>setToTest, string s) {
-	const auto is_in = setToTest.find(s) != setToTest.end();
-	return is_in;
-}
 
 vector<string> setToVec(unordered_set<string> uset) {
 	vector<string> v;
@@ -64,8 +55,7 @@ vector<string> setToVec(unordered_set<string> uset) {
 }
 
 vector<string> setToVec(set<string> set) {
-	vector<string> v;
-	copy(set.begin(), set.end(), std::back_inserter(v));
+	vector<string> v(set.begin(),set.end());
 	return v;
 }
 
@@ -73,7 +63,6 @@ vector<string> InsultGenerator::generate(unsigned int n) {
 	if (n < 1 || n > 10000) {
 		throw NumInsultsOutOfBounds();
 	}
-	vector<string> vector_of_insults;
 	set<string> set_of_insults; //it seems an ordered set with no sorting at the end works better than unordered sets with sorting
 	string tmp;
 	srand(time(NULL));
@@ -82,7 +71,7 @@ vector<string> InsultGenerator::generate(unsigned int n) {
 		tmp = "Thou " + col1.at(rand() % col1.size()) + " " + col2.at(rand() % col2.size()) + " " + col3.at(rand() % col3.size()) + "!";
 		set_of_insults.emplace(tmp);
 	}
-	vector_of_insults = setToVec(set_of_insults);
+	vector<string>vector_of_insults = setToVec(set_of_insults);
 	return vector_of_insults;
 }
 
